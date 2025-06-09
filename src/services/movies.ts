@@ -18,7 +18,7 @@ export const fetchMovies = async (
     let response: Response
     if (query) {
       response = await fetch(
-        `${API_URL}/search/movie?query=${query}&language=es-ES&page=${page}`,
+        `${API_URL}/search/movie?query=${encodeURIComponent(query)}&language=es-ES&page=${page}`,
         options
       )
     } else {

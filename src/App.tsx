@@ -6,8 +6,14 @@ function App () {
   const { movies, error, loading } = useMovies()
   return (
     <>
-    <ToggleTheme />
-      <h1 className='text-3xl font-bold underline text-center'>Movie App</h1>
+      <ToggleTheme />
+      <div className='container p-2 mx-auto'>
+        <img className='mx-auto' src='/hero.png' alt='Hero poster' />
+        <h1 className='text-3xl sm:text-4xl font-extrabold text-center'>
+          Encuentra todas tus{' '}
+          <span className='bg-gradient-to-r from-blue-500 to-indigo-500 text-transparent bg-clip-text text-wrap'>películas favoritas</span>
+        </h1>
+      </div>
       {loading ? (
         <p>Loading...</p>
       ) : error.error ? (
@@ -15,7 +21,6 @@ function App () {
       ) : (
         <MovieList moviesList={movies} />
       )}
-      
     </>
   )
 }
