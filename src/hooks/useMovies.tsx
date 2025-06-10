@@ -41,10 +41,12 @@ export function useMovies () {
     // En el caso de que se realice una búsqueda, se debe mostrar la página 1
     setActualPage(1)
     searchMovies(1)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQuery])
 
   useEffect(() => {
     searchMovies()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actualPage])
 
   return {

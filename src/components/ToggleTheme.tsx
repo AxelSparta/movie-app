@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react'
+import { MoonIcon } from '../icons/Moon'
+import { SunIcon } from '../icons/Sun'
 
 type Theme = 'light' | 'dark'
 
 export function ToggleTheme () {
-  const [theme, setTheme] = useState<Theme>('light')
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (localStorage.getItem('theme')) {
+      return localStorage.getItem('theme') as Theme
+    } else {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+      return systemTheme.matches ? 'dark' : 'light'
+    }
+  })
 
   useEffect(() => {
-    // leer preferencia del tema del usuario del sistema, objeto MediaQueryList que contiene la propiedad matches, si es true es dark, si es false es light
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-    const themePreference = systemTheme.matches ? 'dark' : 'light' 
-    document.documentElement.className = themePreference
-
-    setTheme(themePreference)
-  }, [])
-
-  useEffect(() => {
+    localStorage.setItem('theme', theme)
     document.documentElement.className = theme
   }, [theme])
 
@@ -27,10 +28,10 @@ export function ToggleTheme () {
 
   return (
     <button
-      className='border rounded-xl p-2 cursor-pointer'
+      className='p-2 cursor-pointer hover:scale-110 transition-transform block mx-auto mt-2'
       onClick={handleToggleTheme}
     >
-      Toggle Theme: {theme}
+      {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
     </button>
   )
 }
