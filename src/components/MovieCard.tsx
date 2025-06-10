@@ -5,7 +5,7 @@ export function MovieCard ({ movie }: { movie: Movie }) {
   return (
     <div className='rounded-2xl p-6 bg-gray-200 dark:bg-gray-900'>
       <img
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '/no-movie.png'}
         alt={movie.title}
         className='mx-auto w-full h-auto object-contain'
       />

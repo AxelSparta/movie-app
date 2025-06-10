@@ -23,5 +23,6 @@ export interface ErrorMovies {
 export interface MovieResponse {
   error: boolean,
   results: Movie[],
-  errorMessage: string
+  errorMessage: string,
+  totalPages: number
 }

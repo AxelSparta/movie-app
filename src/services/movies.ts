@@ -34,13 +34,15 @@ export const fetchMovies = async (
     return {
       error: false,
       results: data.results,
-      errorMessage: ''
+      errorMessage: '',
+      totalPages: data.total_pages
     }
   } catch {
     return {
       error: true,
       results: [],
-      errorMessage: 'Error al obtener películas'
+      errorMessage: 'Error al obtener películas',
+      totalPages: 0
     }
   }
 }
