@@ -1,65 +1,18 @@
-import { MovieList } from './components/MovieList'
-import { Pagination } from './components/Pagination'
-import { Spinner } from './components/Spinner'
+import { Route, Routes } from 'react-router'
 import { ToggleTheme } from './components/ToggleTheme'
-import { useMovies } from './hooks/useMovies'
-import { SearchIcon } from './icons/Search'
+import { Home } from './pages/Home'
+import { MovieDetail } from './pages/MovieDetail'
 
 function App () {
-  const {
-    movies,
-    error,
-    loading,
-    setQuery,
-    totalPages,
-    actualPage,
-    setActualPage
-  } = useMovies()
   return (
     <>
+      <div className='fixed top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)] dark:bg-neutral-950 dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]'></div>
       <ToggleTheme />
-      <div className='container p-2 mx-auto'>
-        <img className='mx-auto' src='/hero.png' alt='Hero poster' />
-        <h1 className='text-3xl sm:text-4xl font-extrabold text-center'>
-          Encuentra todas tus{' '}
-          <span className='bg-gradient-to-r from-blue-500 to-indigo-500 text-transparent bg-clip-text text-wrap'>
-            películas favoritas
-          </span>
-        </h1>
-      </div>
-      <form
-        action=''
-        onSubmit={e => e.preventDefault()}
-        className='flex justify-center'
-      >
-        <input
-          type='search'
-          name='search'
-          placeholder='Avengers, The Hulk, Spiderman...'
-          className='w-96 p-2 border rounded-l-xl border-r-0'
-          onChange={e => setQuery(e.target.value)}
-        />
-        <button
-          type='submit'
-          className='p-2 border rounded-tr-xl rounded-br-xl hover:bg-slate-200 cursor-pointer dark:hover:bg-slate-800'
-        >
-          <SearchIcon />
-        </button>
-      </form>
-      {loading ? (
-        <Spinner />
-      ) : error.error ? (
-        <p>{error.message}</p>
-      ) : (
-        <>
-          <MovieList moviesList={movies} />
-          <Pagination
-            totalPages={totalPages}
-            actualPage={actualPage}
-            setActualPage={setActualPage}
-          />
-        </>
-      )}
+
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/movie/:id' element={<MovieDetail />} />
+      </Routes>
     </>
   )
 }
