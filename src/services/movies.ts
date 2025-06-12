@@ -1,4 +1,4 @@
-import type { MovieDetailResponse, MovieResponse } from '../types/types'
+import type { MovieDetailResponse, MovieResponse, MovieVideosResponse } from '../types/types'
 
 const API_URL = 'https://api.themoviedb.org/3'
 const options = {
@@ -71,6 +71,30 @@ export const fetchMovieDetail = async (
       error: true,
       errorMessage: 'Error al obtener película',
       movieDetail: null
+    }
+  }
+}
+
+export const fetchVideos = async (id: number): Promise<MovieVideosResponse> => {
+  try {
+    const response = await fetch(
+      `${API_URL}/movie/${id}/videos?language=es-MX`,
+      options
+    )
+    if (!response.ok) {
+      throw new Error('Error al obtener los videos')
+    }
+    const data = await response.json()
+    return {
+      error: false,
+      movieVideos: data,
+      errorMessage: ''
+    }
+  } catch {
+    return {
+      error: true,
+      errorMessage: 'Error al obtener los videos',
+      movieVideos: null
     }
   }
 }

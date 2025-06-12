@@ -43,7 +43,7 @@ export interface MovieDetail {
   poster_path: string
   production_companies: ProductionCompany[]
   production_countries: ProductionCountry[]
-  release_date: Date
+  release_date: string
   revenue: number
   runtime: number
   spoken_languages: SpokenLanguage[]
@@ -89,3 +89,34 @@ export type MovieDetailResponse =
       errorMessage: string
       movieDetail: null
     }
+
+export interface MovieVideos {
+  id: number
+  results: Result[]
+}
+
+export interface Result {
+  iso_639_1: string
+  iso_3166_1: string
+  name: string
+  key: string
+  site: string
+  size: number
+  type: string
+  official: boolean
+  published_at: Date
+  id: string
+}
+
+export type MovieVideosResponse =
+  | {
+      error: false
+      errorMessage: ''
+      movieVideos: MovieVideos
+    }
+  | {
+      error: true
+      errorMessage: string
+      movieVideos: null
+    }
+
