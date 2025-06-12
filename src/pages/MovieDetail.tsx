@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router'
+import { Badge } from '../components/Badge'
+import { Spinner } from '../components/Spinner'
 import { PrevIcon } from '../icons/Prev'
 import { StarIcon } from '../icons/Star'
 import { fetchMovieDetail, fetchVideos } from '../services/movies'
@@ -8,14 +10,19 @@ import type { MovieDetail, MovieVideos } from '../types/types'
 export function MovieDetail () {
   const [movieDetail, setMovieDetail] = useState<MovieDetail | null>(null)
   const [movieVideos, setMovieVideos] = useState<MovieVideos | null>(null)
+  const [loading, setLoading] = useState(true)
   const { id } = useParams()
   useEffect(() => {
-    fetchMovieDetail(Number(id)).then(data => setMovieDetail(data.movieDetail))
+    fetchMovieDetail(Number(id))
+      .then(data => setMovieDetail(data.movieDetail))
+      .finally(() => setLoading(false))
     fetchVideos(Number(id)).then(data => setMovieVideos(data.movieVideos))
   }, [id])
   return (
     <>
-      {movieDetail ? (
+      {loading ? (
+        <Spinner />
+      ) : movieDetail ? (
         <main className='container mx-auto p-6'>
           <nav>
             <NavLink
@@ -25,27 +32,31 @@ export function MovieDetail () {
               <PrevIcon /> Volver atrás
             </NavLink>
           </nav>
-          <div className='flex justify-between items-center'>
+          <div className='flex flex-col gap-4 md:flex-row justify-between items-center flex-wrap'>
             <h1 className='text-4xl font-bold'>{movieDetail.title}</h1>
             <span className='flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400'>
               {movieDetail.release_date.split('-')[0]} {'• '}
               {movieDetail.runtime}min {'• '}
               {movieDetail.original_language}
             </span>
-            <span className='flex items-center gap-2 text-sm rounded p-2 bg-slate-100 dark:bg-slate-800'>
+            <Badge>
               <StarIcon className='text-amber-300' />{' '}
               {movieDetail.vote_average.toFixed(1)}/10 {'• '}
               {movieDetail.popularity.toFixed(1)}k
-            </span>
+            </Badge>
           </div>
-          <div className='py-6 flex items-start justify-around gap-6'>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`}
-              alt={movieDetail.title}
-              className='max-w-[302px] rounded-lg'
-            />
+          <div className='py-6 flex flex-col justify-center items-center lg:flex-row lg:justify-between gap-6'>
+            {movieDetail.poster_path ? (
+              <img
+                src={`https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`}
+                alt={movieDetail.title}
+                className='max-w-[302px] rounded-lg'
+              />
+            ) : (
+              <img src='/no-movie.png' alt='No movie' className='max-w-[302px] rounded-lg' />
+            )}
             {movieVideos && movieVideos.results.length > 0 && (
-              <div className='relative w-full aspect-video max-h-[453px] max-w-[806.34px] mx-auto rounded-lg overflow-hidden'>
+              <div className='relative w-full aspect-video max-h-[453px] max-w-[806.34px] rounded-lg overflow-hidden'>
                 <iframe
                   className='w-full h-full'
                   src={`https://www.youtube.com/embed/${movieVideos.results[0].key}`}
@@ -58,45 +69,43 @@ export function MovieDetail () {
             )}
           </div>
           <div className='flex flex-col gap-6'>
-            <div>
-              <p className='text-lg font-bold'>Géneros</p>
-              <p>{movieDetail.genres.map(genre => genre.name).join(', ')}</p>
+            <div className='flex flex-col md:flex-row md:items-center gap-4 max-w-5xl'>
+              <h3 className='text-lg font-bold'>Géneros</h3>
+              <p className='flex flex-wrap gap-2'>{movieDetail.genres.map(genre => <Badge key={genre.id}>{genre.name}</Badge>)}</p>
             </div>
-            <div>
-              <p className='text-lg font-bold'>Sinopsis</p>
-              <p>{movieDetail.overview}</p>
+            <div className='flex flex-col md:flex-row md:items-center gap-4 max-w-5xl'>
+              <h3 className='text-lg font-bold'>Sinopsis</h3>
+              <p>{movieDetail.overview || 'No hay sinopsis disponible'}</p>
             </div>
-            <div>
-              <p className='text-lg font-bold'>Producción</p>
-              <p>
-                {movieDetail.production_companies
-                  .map(company => company.name)
-                  .join(', ')}
+            <div className='flex flex-col md:flex-row md:items-center gap-4 max-w-5xl'>
+              <h3 className='text-lg font-bold'>Producción</h3>
+              <p className='flex flex-wrap gap-2'>
+                {movieDetail.production_companies.map(company => <Badge key={company.id}>{company.name}</Badge>)}
               </p>
             </div>
-            <div>
-              <p className='text-lg font-bold'>Estátus</p>
+            <div className='flex flex-col md:flex-row md:items-center gap-4 max-w-5xl'>
+              <h3 className='text-lg font-bold'>Estátus</h3>
               <p>{movieDetail.status}</p>
             </div>
-            <div>
-              <p className='text-lg font-bold'>Idiomas</p>
+            <div className='flex flex-col md:flex-row md:items-center gap-4 max-w-5xl'>
+              <h3 className='text-lg font-bold'>Idiomas</h3>
               <p>
                 {movieDetail.spoken_languages
                   .map(language => language.name)
                   .join(', ')}
               </p>
             </div>
-            <div>
-              <p className='text-lg font-bold'>Fecha de lanzamiento</p>
+            <div className='flex flex-col md:flex-row md:items-center gap-4 max-w-5xl'>
+              <h3 className='text-lg font-bold'>Fecha de lanzamiento</h3>
               <p>{movieDetail.release_date}</p>
             </div>
-            <div>
-              <p className='text-lg font-bold'>Presupuesto</p>
-              <p>{movieDetail.budget}</p>
+            <div className='flex flex-col md:flex-row md:items-center gap-4 max-w-5xl'>
+              <h3 className='text-lg font-bold'>Presupuesto</h3>
+              <p>{movieDetail.budget ? `$${(movieDetail.budget / 1000000).toFixed(1)}M` : 'NaN'}</p>
             </div>
-            <div>
-              <p className='text-lg font-bold'>Recaudación</p>
-              <p>{movieDetail.revenue}</p>
+            <div className='flex flex-col md:flex-row md:items-center gap-4 max-w-5xl'>
+              <h3 className='text-lg font-bold'>Recaudación</h3>
+              <p>{movieDetail.revenue ? `$${(movieDetail.revenue / 1000000).toFixed(1)}M` : 'NaN'}</p>
             </div>
           </div>
         </main>

@@ -13,10 +13,12 @@ export function Pagination ({
   const goToPrevPage = () => {
     if (actualPage === 1) return
     setActualPage(prevPage => prevPage - 1)
+    window.scrollTo({ top: 500, behavior: 'smooth' })
   }
   const goToNextPage = () => {
     if (actualPage === totalPages) return
     setActualPage(prevPage => prevPage + 1)
+    window.scrollTo({ top: 500, behavior: 'smooth' })
   }
   return (
     <div className='flex gap-2 justify-center py-10 items-center'>
