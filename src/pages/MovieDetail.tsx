@@ -6,6 +6,7 @@ import { PrevIcon } from '../icons/Prev'
 import { StarIcon } from '../icons/Star'
 import { fetchMovieDetail, fetchVideos } from '../services/movies'
 import type { MovieDetail, MovieVideos } from '../types/types'
+import { NotFoundPage } from './404'
 
 export function MovieDetail () {
   const [movieDetail, setMovieDetail] = useState<MovieDetail | null>(null)
@@ -110,9 +111,7 @@ export function MovieDetail () {
           </div>
         </main>
       ) : (
-        <p className='text-center text-xl font-bold'>
-          No hay película para mostrar
-        </p>
+        <NotFoundPage />
       )}
     </>
   )
