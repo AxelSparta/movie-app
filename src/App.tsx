@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router'
+import { Footer } from './components/Footer'
 import { ToggleTheme } from './components/ToggleTheme'
 import { Home } from './pages/Home'
 import { MovieDetail } from './pages/MovieDetail'
@@ -13,6 +14,8 @@ function App () {
         <Route path='/' element={<Home />} />
         <Route path='/movie/:id' element={<MovieDetail />} />
       </Routes>
+      <Footer />
+
     </>
   )
 }
