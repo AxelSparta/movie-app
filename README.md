@@ -51,6 +51,7 @@
 
 ## Estructura del proyecto
 
+```bash
 movie-app/
 ├─ node_modules/               # Dependencias
 ├─ public/                     # index.html, favicon, etc.
@@ -65,6 +66,7 @@ movie-app/
 ├─ tailwind.config.js
 ├─ package.json
 └─ vite.config.js
+```
 
 ---
 
