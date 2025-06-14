@@ -1,65 +1,71 @@
-# Movie App
-- Movie App is a movie app that uses React, TailwindCSS, TypeScript, and Vite.
-- It is a movie app that uses the TMDB API to get movie data. https://developer.themoviedb.org/docs/getting-started
+# 🎬 movie-app
 
-## Features
-- Dark/Light mode
-- Responsive design
-- Search movies
-- Pagination
-- Movie details
+**movie-app** es una aplicación web para explorar, buscar y ver detalles de películas. Está desarrollada con tecnologías frontend y consume datos de una API de películas. Puedes ver la demo en vivo en [moviesparta.netlify.app](https://moviesparta.netlify.app/).
 
-## TODO
-- Dark/Light mode
-- Responsive design
-- Search movies
-- Pagination
-- Movie details
-- Background image
-- head meta tags
+---
 
-## Expanding the ESLint configuration
+## 🧩 Tecnologías utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend**
+  - **React**: manejo eficiente de UI con componentes.
+  - **React Router**: navegación SPA entre secciones.
+  - **Tailwind CSS**: estilado responsivo y moderno.
+  - **Vite**: entorno de desarrollo optimizado y rápido.
+- **API / Backend**
+  - Conexión con **The Movie Database (TMDb)** u otra API pública para obtener datos de películas y series.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🧭 Características
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- ✅ Interfaz limpia y responsiva.
+- 🎞️ Listado de películas populares.
+- 🔍 Búsqueda por título.
+- 🧾 Páginas de detalle: sinopsis, tráiler, calificación, reparto.
+- ️ Manejo de estado y loading indicators.
+- ⚠️ Gestión de errores (mensajes en caso de fallo en API).
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
+
+## 🚀 Instalación local
+
+1. Clona el repo:
+   ```bash
+   git clone https://github.com/AxelSparta/movie-app.git
+   cd movie-app
+2. Instala las dependencias:
+   ```bash
+   pnpm install
+   ```
+3. Configura la API_KEY en el archivo .env:
+   ```bash
+   API_KEY=your_api_key
+   ```
+4. Ejecuta el servidor de desarrollo:
+   ```bash
+   pnpm dev
+   ```
+5. Abre tu navegador y ve a http://localhost:5173 para ver la aplicación.
+
+---
+
+## Estructura del proyecto
+
+movie-app/
+├─ node_modules/               # Dependencias
+├─ public/                     # index.html, favicon, etc.
+├─ src/
+│  ├─ components/             # UI reutilizable (MovieCard, Navbar…)
+│  ├─ pages/                  # Vistas (Home, MovieDetail…)
+│  ├─ services/               # Lógica de API (TMDb)
+│  ├─ hooks/                  # Hooks personalizados
+│  ├─ App.jsx                 # Rutas principales
+│  └─ index.jsx               # Entrada principal
+├─ .env                       # Clave de API
+├─ tailwind.config.js
+├─ package.json
+└─ vite.config.js
+
+---
+
+Disponible en: https://moviesparta.netlify.app
